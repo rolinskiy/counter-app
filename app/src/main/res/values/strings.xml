@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Counter</string>
+    <string name="increment_counter">Increment counter</string>
+    <string name="decrement_counter">Decrement counter</string>
+    <string name="reset">Reset</string>
+    <string name="lock">Lock</string>
+</resources>
