@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import org.koin.android.viewmodel.ext.android.viewModel
 import ua.rolinskiy.counter.R
 import ua.rolinskiy.counter.databinding.CounterFragmentBinding
 
@@ -18,7 +18,8 @@ class CounterFragment : Fragment() {
         fun newInstance() = CounterFragment()
     }
 
-    private lateinit var vm: CounterViewModel
+    private val vm: CounterViewModel by viewModel()
+
     private val vibrator by lazy {
         context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
     }
@@ -29,8 +30,6 @@ class CounterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        vm = ViewModelProvider(this).get(CounterViewModel::class.java)
-
         return DataBindingUtil.inflate<CounterFragmentBinding>(
             inflater,
             R.layout.counter_fragment, container, false
@@ -39,6 +38,7 @@ class CounterFragment : Fragment() {
             lifecycleOwner = this@CounterFragment
             buttonPlus.setOnClickListener {
                 vm.onIncrementButtonClick()
+                @Suppress("DEPRECATION")
                 vibrator?.vibrate(30)
             }
         }.root

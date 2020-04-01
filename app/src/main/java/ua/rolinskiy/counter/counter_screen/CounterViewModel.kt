@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CounterViewModel : ViewModel() {
+class CounterViewModel(val repository: CounterRepository) : ViewModel() {
 
     val counterText: LiveData<String>
         get() = _counterText
@@ -18,7 +18,7 @@ class CounterViewModel : ViewModel() {
         }
 
     fun initCounter() {
-        counter = 0
+        counter = repository.getCounterValue()
     }
 
     fun onIncrementButtonClick() {
@@ -32,7 +32,7 @@ class CounterViewModel : ViewModel() {
     }
 
     fun onResetButtonClick(v: View) {
-        initCounter()
+        counter = 0
     }
 
     fun onLockButtonClick(v: View) {
