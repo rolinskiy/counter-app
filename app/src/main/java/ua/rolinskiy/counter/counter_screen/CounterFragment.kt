@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import ua.rolinskiy.counter.R
 import ua.rolinskiy.counter.databinding.CounterFragmentBinding
+
+//TODO add TARGET count
+//TODO add TARGET reached vibration
+//TODO add TARGET reached times statistics
+//TODO add "Counters list" button and screen
 
 class CounterFragment : Fragment() {
     private val defaultId = 1
@@ -24,7 +29,7 @@ class CounterFragment : Fragment() {
         }
     }
 
-    private val vm: CounterViewModel by viewModel()
+    private val vm: CounterViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +43,6 @@ class CounterFragment : Fragment() {
         ).apply {
             viewModel = vm
             lifecycleOwner = this@CounterFragment
-            buttonPlus.setOnClickListener {
-                vm.onIncrementButtonClick()
-            }
         }.root
     }
 

@@ -46,15 +46,12 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun onIncrementButtonClick() {
-        counter.increment()
-        updateCounterUI()
-        vibrate()
+    fun onIncrementButtonClick(v: View) {
+        increment()
     }
 
     fun onDecrementButtonClick(v: View) {
-        counter.decrement()
-        updateCounterUI()
+        decrement()
     }
 
     fun onResetButtonClick(v: View) {
@@ -66,15 +63,37 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
         //todo lock all buttons but increment
     }
 
+    fun increment() {
+        counter.increment()
+        updateCounterUI()
+        vibrateIncrement()
+    }
+
+    fun decrement() {
+        counter.decrement()
+        updateCounterUI()
+        vibrateDecrement()
+    }
+
     private fun updateCounterUI() {
         val countText = String.format("%04d", counter.value)
         _counterText.postValue(countText)
     }
 
-    private fun vibrate() {
+    private fun vibrateIncrement() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator?.vibrate(VibrationEffect.createOneShot(30, 3))
         } else {
+            vibrator?.vibrate(30)
+        }
+    }
+
+    private fun vibrateDecrement() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator?.vibrate(VibrationEffect.createOneShot(30, 3))
+            vibrator?.vibrate(VibrationEffect.createOneShot(30, 3))
+        } else {
+            vibrator?.vibrate(30)
             vibrator?.vibrate(30)
         }
     }
